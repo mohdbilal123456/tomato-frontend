@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useAuth } from '../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
 import { authAPI } from '../services/authApi'
@@ -8,7 +8,7 @@ type Role = "customer" | "rider" | "seller" | null
 function SelectRole() {
 
   const [role, setRole] = useState<Role>(null)
-  const { setUser } = useAuth()
+  const { setUser, setIsAuth } = useAuth()
   const navigate = useNavigate()
 
   const roles: Role[] = ["customer", "rider", "seller"]
@@ -17,8 +17,9 @@ function SelectRole() {
     try {
       if (!role) return;
       const data = await authAPI.addRole(role)
-      console.log("DATA ->",data.user)
+      console.log("DATA ->",data.user)       
       setUser(data.user)
+      setIsAuth(true)
       navigate("/")
     } catch (error) {
       console.log("Error",error)
@@ -37,7 +38,7 @@ function SelectRole() {
                 key={r}
                 onClick={() => setRole(r)}
                 className={`
-                    w-full rounded-xl border px-4 py-3 text-sm font-medium capitalize transition ${role === r
+                    w-full rounded-xl cursor-pointer border px-4 py-3 text-sm font-medium capitalize transition ${role === r
                     ? "border-[#E23744] bg-[#E23744] text-white"
                     : "border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
                   }
@@ -50,7 +51,7 @@ function SelectRole() {
           <button
             disabled={!role}
             onClick={addRole}
-            className={`w-full rounded-xl px-4 py-3 text-sm font-semibold transition ${role
+            className={`w-full cursor-pointer rounded-xl px-4 py-3 text-sm font-semibold transition ${role
                 ? "border-[#E23744] bg-[#E23744] text-white hover:bg[#d32f3a]"
                 : "bg-gray-200 text-gray-400 cursor-not-allowed"
               }`}

@@ -2,48 +2,137 @@ import { useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { authAPI } from "../services/authApi";
 import { useNavigate } from "react-router-dom";
+import type { LocationData, Props, User } from "../types";
+import { tryCatch } from "../utils/tryCatch";
+import { useLocation } from "react-router-dom";
+import toast from "react-hot-toast";
 
-export const AuthProvider = ({ children }: any) => {
-  const [user, setUser] = useState(null);
+export const AuthProvider = ({ children }: Props) => {
+  const [user, setUser] = useState<User | null>(null);
   const [isAuth, setIsAuth] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate()
+  const [loadingLocation, setLoadingLocation] = useState(false);
+  const [location, setLocation] = useState<LocationData | null>(null);
+  const [city, setCity] = useState("fetching Location ...");
+  const pageLocation = useLocation();
+
   const loginWithGoogle = async (code: string) => {
-  try {
-    setLoading(true);
+    // setLoading(true);
 
-    console.log("Sending code:", code); // 🔥 debug
+    const [data, error] = await tryCatch(() =>
+      authAPI.loginWithGoogle(code)
+    );
 
-    const data = await authAPI.loginWithGoogle(code);
+    if (error) {
+      console.error("Login Error:", error);
+      setLoading(false);
+      return;
+    }
 
-    localStorage.setItem("token", data.token);
-    navigate("/")
     setUser(data.user);
     setIsAuth(true);
+    toast.success(data?.message)
+    navigate("/");
 
-  } catch (error: any) {
-    console.error("Login Error:", error.response?.data || error.message);
-  } finally {
     setLoading(false);
-  }
-};
+  };
 
   const fetchProfile = async () => {
-    try {
-      const data = await authAPI.getProfile();
-      setUser(data.user);
-      setIsAuth(true);
-    } catch (error) {
+    setLoading(true);
+
+    const [data, error] = await tryCatch(() =>
+      authAPI.getProfile()
+    );
+
+    if (error) {
       console.log(error);
+      setUser(null);
+      setIsAuth(false);
+      setLoading(false);
+      return;
+    }
+
+    setUser(data.user);
+    setIsAuth(true);
+    setLoading(false);
+  };
+  useEffect(() => {
+  const init = async () => {
+    if (pageLocation.pathname !== "/login") {
+      await fetchProfile();
+    } else {
+      setLoading(false);
     }
   };
 
+  init();
+}, [pageLocation.pathname]); // ✅ important
   useEffect(() => {
-    fetchProfile();
+    const getLocation = () => {
+      if (!navigator.geolocation) {
+        alert("Please Allow Location to continue");
+        return;
+      }
+
+      setLoadingLocation(true);
+
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const { latitude, longitude } = position.coords;
+
+        const [res, error] = await tryCatch(() =>
+          fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`)
+        );
+
+        if (error || !res) {
+          setLocation({
+            latitude,
+            longitude,
+            formattedAddress: "current Location",
+          });
+          setLoadingLocation(false);
+          return;
+        }
+
+        const data = await res.json();
+
+        setLocation({
+          latitude,
+          longitude,
+          formattedAddress: data.display_name || "current Location",
+        });
+
+        setCity(
+          data.address.city ||
+          data.address.town ||
+          data.address.village ||
+          "Your Location"
+        );
+
+        setLoadingLocation(false);
+      });
+    };
+
+    getLocation(); // ✅ now safe
   }, []);
 
+  const value = {
+    user,
+    isAuth,
+    loading,
+    setUser,
+    setIsAuth,
+    setLoading,
+    loginWithGoogle,
+    location,
+    loadingLocation,
+    setLoadingLocation,
+    city
+  }
+
+
   return (
-    <AuthContext.Provider value={{ user, isAuth, loading, loginWithGoogle, setUser }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );

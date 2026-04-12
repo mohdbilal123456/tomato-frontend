@@ -4,12 +4,17 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { FcGoogle } from "react-icons/fc";
 import { useAuth } from "../hooks/useAuth";
 const Login = () => {
-  const { loginWithGoogle,loading } = useAuth();
+  const { loginWithGoogle, loading } = useAuth();
 
   const googleLogin = useGoogleLogin({
     flow: "auth-code",
     onSuccess: (res) => {
       loginWithGoogle(res.code);
+    
+    },
+    onError: () => {
+      console.error("Google login failed");
+      alert("Google sign-in failed. Please try again.");
     },
   });
 
@@ -27,7 +32,8 @@ const Login = () => {
         <button
           onClick={googleLogin}
           disabled={loading}
-          className="flex w-full items-center justify-center gap-3 rounded-xl border border-gray-300 bg-white px-4 py-3"
+          className="flex w-full items-center justify-center gap-3 rounded-xl 
+          border border-gray-300 bg-white px-4 py-3 cursor-pointer "
         >
           <FcGoogle size={20} />
           {loading ? "Signing in ..." : "Continue with Google"}
