@@ -2,7 +2,8 @@ import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { CgShoppingCart } from "react-icons/cg";
 import { BiMapPin, BiSearch } from "react-icons/bi";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
+
 
 const Navbar = () => {
   const { isAuth, city } = useAuth();

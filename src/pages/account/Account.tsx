@@ -1,14 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { BiLogOut, BiMapPin, BiPackage } from "react-icons/bi";
-import { useAuth } from "../hooks/useAuth";
-import { authAPI } from "../services/authApi";
-import { tryCatch } from "../utils/tryCatch";
+import { tryCatch } from "../../utils/tryCatch";
+import { authAPI } from "../../services/authApi";
+import { useAuth } from "../../hooks/useAuth";
 
 const Account = () => {
   const { user, setUser, setIsAuth } = useAuth();
 
-  const firstLetter = user?.name.charAt(0).toUpperCase();
+  const firstLetter = user?.email.charAt(0).toUpperCase();
 
   const navigate = useNavigate();
 

@@ -4,12 +4,13 @@ import App from './App.tsx'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { AuthProvider } from './context/AuthProvider.tsx';
 import { BrowserRouter } from 'react-router-dom';
+import { GOOGLE_CLIENT_ID } from './config/env.ts';
 
 
 createRoot(document.getElementById('root')!).render(
   <>
     <BrowserRouter>
-      <GoogleOAuthProvider clientId="296394245552-iiatakl7tku1njlispp4akf2bjqn3it1.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
         <AuthProvider>
           <App />
         </AuthProvider>

@@ -6,6 +6,10 @@ import type { LocationData, Props, User } from "../types";
 import { tryCatch } from "../utils/tryCatch";
 import { useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
+import { getApiErrorMessage, isUnauthorizedError } from "../utils/apiError";
+import {
+  AUTH_SESSION_EXPIRED_EVENT,
+} from "../utils/authEvents";
 
 export const AuthProvider = ({ children }: Props) => {
   const [user, setUser] = useState<User | null>(null);
@@ -18,7 +22,7 @@ export const AuthProvider = ({ children }: Props) => {
   const pageLocation = useLocation();
 
   const loginWithGoogle = async (code: string) => {
-    // setLoading(true);
+    setLoading(true);
 
     const [data, error] = await tryCatch(() =>
       authAPI.loginWithGoogle(code)
@@ -26,6 +30,9 @@ export const AuthProvider = ({ children }: Props) => {
 
     if (error) {
       console.error("Login Error:", error);
+      if (!isUnauthorizedError(error)) {
+        toast.error(getApiErrorMessage(error));
+      }
       setLoading(false);
       return;
     }
@@ -47,6 +54,9 @@ export const AuthProvider = ({ children }: Props) => {
 
     if (error) {
       console.log(error);
+      if (pageLocation.pathname !== "/login" && !isUnauthorizedError(error)) {
+        toast.error(getApiErrorMessage(error));
+      }
       setUser(null);
       setIsAuth(false);
       setLoading(false);
@@ -57,17 +67,37 @@ export const AuthProvider = ({ children }: Props) => {
     setIsAuth(true);
     setLoading(false);
   };
-  useEffect(() => {
-  const init = async () => {
-    if (pageLocation.pathname !== "/login") {
-      await fetchProfile();
-    } else {
-      setLoading(false);
-    }
-  };
 
-  init();
-}, [pageLocation.pathname]); // ✅ important
+  useEffect(() => {
+    const handleSessionExpired = () => {
+      setUser(null);
+      setIsAuth(false);
+      setLoading(false);
+      // toast.error("Session expired. Please login again.");
+
+      if (window.location.pathname !== "/login") {
+        navigate("/login", { replace: true });
+      }
+    };
+
+    window.addEventListener(AUTH_SESSION_EXPIRED_EVENT, handleSessionExpired);
+
+    return () => {
+      window.removeEventListener(AUTH_SESSION_EXPIRED_EVENT, handleSessionExpired);
+    };
+  }, [navigate]);
+
+  useEffect(() => {
+    const init = async () => {
+      if (pageLocation.pathname !== "/login") {
+        await fetchProfile();
+      } else {
+        setLoading(false);
+      }
+    };
+
+    init();
+  }, [pageLocation.pathname]);
   useEffect(() => {
     const getLocation = () => {
       if (!navigator.geolocation) {
@@ -113,7 +143,7 @@ export const AuthProvider = ({ children }: Props) => {
       });
     };
 
-    getLocation(); // ✅ now safe
+    getLocation();
   }, []);
 
   const value = {

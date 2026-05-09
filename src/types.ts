@@ -37,3 +37,39 @@ export type Role = "customer" | "rider" | "seller";
 export type Props = {
   children: ReactNode;
 };
+
+export interface IRestaurant{
+  _id:string,
+  name:string;
+  description?:string;
+  image:string;
+  ownerId:string;
+  phone:number;
+  isVerified:boolean;
+
+  autoLocation:{
+    type:"point",
+    coordinates:[number,number];
+    formattedAddress:string;
+  };
+
+  isOpen:boolean;
+  createdAt:Date
+}
+
+export interface IMenuItem extends Document {
+  _id:string,
+  restaurantId: string,
+  name: string,
+  description: string,
+  image?: string,
+  price:string,
+  isAvailable: boolean,
+  createdAt: Date,
+  updatedAt: Date,
+}
+export interface LocationData {
+  latitude: number;
+  longitude: number;
+  formattedAddress: string;
+}

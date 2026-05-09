@@ -1,24 +1,22 @@
 import type { Role } from "../types";
-import { api } from "./axiosInstance";
+import { authApi } from "./axiosInstance";
 
 export const authAPI = {
   loginWithGoogle: async (code: string) => {
-    const { data } = await api.post("/api/auth/login", { code });
-    console.log("data",data)
+    const { data } = await authApi.post("/api/auth/login", { code });
     return data;
   },
 
   getProfile: async () => {
-    const { data } = await api.get("/api/auth/me");
+    const { data } = await authApi.get("/api/auth/me");
     return data;
   },
   addRole: async (role: Role) => {
-    const { data } = await api.put("/api/auth/add/role", { role })
+    const { data } = await authApi.put("/api/auth/add/role", { role })
     return data
   },
   logOut:async()=>{
-    const {data}=await api.post("/api/auth/logout")
-    console.log("DATA LOGOUT",data)
+    const {data}=await authApi.post("/api/auth/logout")
     return data
   }
 };

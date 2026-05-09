@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { useAuth } from '../hooks/useAuth'
+
 import { useNavigate } from 'react-router-dom'
-import { authAPI } from '../services/authApi'
+import { authAPI } from '../../services/authApi'
+import { useAuth } from '../../hooks/useAuth'
 
 type Role = "customer" | "rider" | "seller" | null
 
@@ -16,8 +17,7 @@ function SelectRole() {
   const addRole = async()=>{
     try {
       if (!role) return;
-      const data = await authAPI.addRole(role)
-      console.log("DATA ->",data.user)       
+      const data = await authAPI.addRole(role)       
       setUser(data.user)
       setIsAuth(true)
       navigate("/")
