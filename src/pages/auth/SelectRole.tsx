@@ -1,8 +1,7 @@
 import { useState } from 'react'
-
 import { useNavigate } from 'react-router-dom'
-import { authAPI } from '../../services/authApi'
 import { useAuth } from '../../hooks/useAuth'
+import { authAPI } from '../../services/authservice/authApi'
 
 type Role = "customer" | "rider" | "seller" | null
 

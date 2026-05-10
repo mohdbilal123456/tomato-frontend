@@ -3,10 +3,10 @@ import { BiEdit, BiMapPin, BiSave } from 'react-icons/bi'
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import { restaurantAPI } from '../../services/restaurantApi';
-import { authAPI } from '../../services/authApi';
 import type { IRestaurant } from '../../types';
 import { getApiErrorMessage } from '../../utils/apiError';
+import { restaurantAPI } from '../../services/restaurantservices/restaurantApi';
+import { authAPI } from '../../services/authservice/authApi';
 
 
 

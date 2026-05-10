@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import type { IRestaurant } from '../../types';
 import { useAuth } from '../../hooks/useAuth';
-import { restaurantAPI } from '../../services/restaurantApi';
 import RestaurantCard from '../../components/restaurant/RestaurantCard';
 import Navbar from '../../components/common/Navbar';
 import Loader from '../../components/common/Loader';
+import { restaurantAPI } from '../../services/restaurantservices/restaurantApi';
 
 const Home = () => {
   const { location } = useAuth()

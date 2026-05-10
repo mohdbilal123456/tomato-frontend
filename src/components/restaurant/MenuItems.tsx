@@ -5,9 +5,9 @@ import { FiEyeOff } from 'react-icons/fi';
 import { BiTrash } from 'react-icons/bi';
 import toast from 'react-hot-toast';
 import type { IMenuItem } from '../../types';
-import { menuAPI } from '../../services/menuItemApi';
 import ConfirmModal from '../common/ConfirmModal';
 import { getApiErrorMessage } from '../../utils/apiError';
+import { menuAPI } from '../../services/restaurantservices/menuItemApi';
 
 interface MenuItemsProps {
   items: IMenuItem[];

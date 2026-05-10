@@ -1,5 +1,5 @@
-import type { Role } from "../types";
-import { authApi } from "./axiosInstance";
+import type { Role } from "../../types";
+import { authApi } from "../axiosInstance";
 
 export const authAPI = {
   loginWithGoogle: async (code: string) => {

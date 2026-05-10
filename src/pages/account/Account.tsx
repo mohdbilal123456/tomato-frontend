@@ -2,8 +2,8 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { BiLogOut, BiMapPin, BiPackage } from "react-icons/bi";
 import { tryCatch } from "../../utils/tryCatch";
-import { authAPI } from "../../services/authApi";
 import { useAuth } from "../../hooks/useAuth";
+import { authAPI } from "../../services/authservice/authApi";
 
 const Account = () => {
   const { user, setUser, setIsAuth } = useAuth();

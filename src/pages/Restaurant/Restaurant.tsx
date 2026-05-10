@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { restaurantAPI } from '../../services/restaurantApi'
 import type { IMenuItem, IRestaurant } from '../../types'
-import { menuAPI } from '../../services/menuItemApi'
 import AddRestaurant from '../../components/restaurant/AddRestaurant'
 import Loader from '../../components/common/Loader'
 import RestaurantProfile from '../../components/restaurant/RestaurantProfile'
 import MenuItems from '../../components/restaurant/MenuItems'
 import AddMenuItems from '../../components/restaurant/AddMenuItems'
+import { restaurantAPI } from '../../services/restaurantservices/restaurantApi'
+import { menuAPI } from '../../services/restaurantservices/menuItemApi'
 
 
 type SellerTab = "menu" | "add-item" | "sales"

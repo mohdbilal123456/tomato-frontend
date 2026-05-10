@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
-import { authAPI } from "../services/authApi";
 import { useNavigate } from "react-router-dom";
 import type { LocationData, Props, User } from "../types";
 import { tryCatch } from "../utils/tryCatch";
@@ -10,6 +9,7 @@ import { getApiErrorMessage, isUnauthorizedError } from "../utils/apiError";
 import {
   AUTH_SESSION_EXPIRED_EVENT,
 } from "../utils/authEvents";
+import { authAPI } from "../services/authservice/authApi";
 
 export const AuthProvider = ({ children }: Props) => {
   const [user, setUser] = useState<User | null>(null);
@@ -67,6 +67,8 @@ export const AuthProvider = ({ children }: Props) => {
     setIsAuth(true);
     setLoading(false);
   };
+
+
 
   useEffect(() => {
     const handleSessionExpired = () => {

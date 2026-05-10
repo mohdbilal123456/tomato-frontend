@@ -1,4 +1,4 @@
-import { restaurantApi } from "./axiosInstance";
+import { restaurantApi } from "../axiosInstance";
 import type { AxiosRequestConfig } from "axios";
 
 type UpdateRestaurantPayload = {

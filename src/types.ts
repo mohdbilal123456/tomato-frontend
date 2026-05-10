@@ -73,3 +73,11 @@ export interface LocationData {
   longitude: number;
   formattedAddress: string;
 }
+export interface ICart extends Document{
+  userId:string,
+  restaurantId:string | IRestaurant,
+  itemId:string | IMenuItem,
+  quantity:number,
+  createdAt:Date,
+  updatedAt:Date
+}

@@ -1,4 +1,4 @@
-import { restaurantApi } from "./axiosInstance";
+import { restaurantApi } from "../axiosInstance"
 
 export const menuAPI = {
   addItem: async (formData: FormData) => {

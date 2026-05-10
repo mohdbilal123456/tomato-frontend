@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { BiUpload } from 'react-icons/bi'
 import toast from 'react-hot-toast'
-import { menuAPI } from '../../services/menuItemApi'
+
 import { getApiErrorMessage } from '../../utils/apiError'
+import { menuAPI } from '../../services/restaurantservices/menuItemApi'
 
 function AddMenuItems({ onItemAdded }: { onItemAdded: () => void }) {
 
