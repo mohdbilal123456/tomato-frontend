@@ -13,7 +13,6 @@ export const menuAPI = {
   },
 
   deleteItem: async (itemId: string) => {
-    console.log("itemId",itemId)
     const { data } = await restaurantApi.delete(`/api/item/${itemId}`);
     return data;
   },

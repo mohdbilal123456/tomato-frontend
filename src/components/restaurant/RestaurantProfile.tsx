@@ -42,11 +42,13 @@ function RestaurantProfile({ restaurant, isSeller, onUpdate }: props) {
         name,
         description,
       };
+     console.log('pay',)
 
       const res = await restaurantAPI.updateRestaurantService(payload);
-
-      const updatedRestaurant = res?.data?.restaurant;
-
+      console.log('res',res)
+      const updatedRestaurant = res?.restaurant;
+      console.log("updatedRestaurant",updatedRestaurant)
+      console.log("updatedRestaurant",updatedRestaurant)
       setName(updatedRestaurant.name);
       setDescription(updatedRestaurant.description);
 
