@@ -21,7 +21,6 @@ const attachInterceptor = (client: typeof authApi) => {
       const requestUrl = String(originalRequest?.url ?? "");
       console.log("requestUrl",requestUrl)
       const isRefreshRequest = requestUrl.includes("/api/auth/refresh");
-      console.log("isRefreshRequest",isRefreshRequest)
       if (!originalRequest) return Promise.reject(error);
       if (originalRequest._retry) return Promise.reject(error);
       if (isRefreshRequest) {

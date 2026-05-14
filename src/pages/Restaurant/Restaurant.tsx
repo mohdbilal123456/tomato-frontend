@@ -17,7 +17,7 @@ export default function Restaurant() {
   const [loading, setLoading] = useState(false)
   const [tab, setTab] = useState("menu")
   const [menuItems, setMenuItems] = useState<IMenuItem[]>([])
-  
+
 
   const fetchMyRestaurant = async () => {
     setLoading(true)
@@ -26,38 +26,38 @@ export default function Restaurant() {
     setLoading(false)
   }
   useEffect(() => {
-  const getRestaurant = async()=>{
-    fetchMyRestaurant()
-  }
-  getRestaurant()
-}, [])
+    const getRestaurant = async () => {
+      fetchMyRestaurant()
+    }
+    getRestaurant()
+  }, [])
 
   const fetchMenuItems = async (restaurantId: string) => {
-  try {
-    setLoading(true)
-    const res = await menuAPI.getMenuItems(restaurantId)
-    setMenuItems(res?.data?.items || [])
-  } catch (error) {
-    console.error(error)
-  } finally {
-    setLoading(false)
+    try {
+      setLoading(true)
+      const res = await menuAPI.getMenuItems(restaurantId)
+      setMenuItems(res?.data?.items || [])
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setLoading(false)
+    }
   }
-}
 
- useEffect(() => {
-  if (restaurant?._id) {
-    fetchMenuItems(restaurant._id)
-  }
-}, [restaurant])
+  useEffect(() => {
+    if (restaurant?._id) {
+      fetchMenuItems(restaurant._id)
+    }
+  }, [restaurant])
 
 
-  
+
   if (loading) return <Loader />
 
   if (!restaurant) {
     return <AddRestaurant fetchMyRestaurant={fetchMyRestaurant} />
   }
-  
+
 
   return (
     <>

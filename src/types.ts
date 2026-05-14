@@ -30,6 +30,11 @@ export interface AppContextType {
   setLoadingLocation: React.Dispatch<React.SetStateAction<boolean>>;
 
   city: string;
+
+  cart:ICart[] | null
+  fetchCart:()=> Promise<void>
+  quantity:number
+  subTotal:number
 }
 export type Role = "customer" | "rider" | "seller";
 

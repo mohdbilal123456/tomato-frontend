@@ -28,5 +28,10 @@ export const restaurantAPI = {
   getNearByRestaurant:async(config:AxiosRequestConfig)=>{
     const {data} = await restaurantApi.get("/api/restaurant/all",config)
     return data
+  },
+  fetchSingleRestaurant:async(id:string)=>{
+    console.log("IIS",id)
+    const {data} = await restaurantApi.get(`/api/restaurant/${id}`)
+    return data
   }
 }

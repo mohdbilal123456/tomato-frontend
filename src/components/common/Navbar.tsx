@@ -6,9 +6,9 @@ import { useAuth } from "../../hooks/useAuth";
 
 
 const Navbar = () => {
-  const { isAuth, city } = useAuth();
+  const { isAuth, city,quantity } = useAuth();
   const currLocation = useLocation();
-
+  console.log("q",quantity)
   const isHomePage = currLocation.pathname === "/";
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -39,7 +39,7 @@ const Navbar = () => {
           <Link to={"/cart"} className="relative">
             <CgShoppingCart className="h-6 w-6 text-[#E23744]" />
             <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#E23744] text-xs font-semibold text-white">
-              {/* {quauntity} */}
+              {quantity}
             </span>
           </Link>
 

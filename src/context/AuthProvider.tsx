@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
-import type { LocationData, Props, User } from "../types";
+import { type ICart, type LocationData, type Props, type User } from "../types";
 import { tryCatch } from "../utils/tryCatch";
 import { useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -10,6 +10,7 @@ import {
   AUTH_SESSION_EXPIRED_EVENT,
 } from "../utils/authEvents";
 import { authAPI } from "../services/authservice/authApi";
+import { cartAPI } from "../services/restaurantservices/cartApi";
 
 export const AuthProvider = ({ children }: Props) => {
   const [user, setUser] = useState<User | null>(null);
@@ -19,6 +20,9 @@ export const AuthProvider = ({ children }: Props) => {
   const [loadingLocation, setLoadingLocation] = useState(false);
   const [location, setLocation] = useState<LocationData | null>(null);
   const [city, setCity] = useState("fetching Location ...");
+  const [cart, setCart] = useState<ICart[]>([])
+  const [subTotal, setSubTotal] = useState(0);
+  const [quantity, setQuantity] = useState(0)
   const pageLocation = useLocation();
 
   const loginWithGoogle = async (code: string) => {
@@ -67,6 +71,32 @@ export const AuthProvider = ({ children }: Props) => {
     setIsAuth(true);
     setLoading(false);
   };
+
+  async function fetchCart() {
+    if (!user || user?.role !== "customer") return
+
+    try {
+      const data = await cartAPI.fetchCart()
+      setCart(data.cart)
+      setCart(data.cart);
+
+      setSubTotal(data.subTotal);
+
+      setQuantity(data.cartLength);
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    const getCart = async () => {
+      if (user && user.role === "customer") {
+        fetchCart()
+      }
+    }
+    getCart()
+  }, [user])
 
 
 
@@ -159,7 +189,11 @@ export const AuthProvider = ({ children }: Props) => {
     location,
     loadingLocation,
     setLoadingLocation,
-    city
+    city,
+    cart,
+    subTotal,
+    quantity,
+    fetchCart
   }
 
 

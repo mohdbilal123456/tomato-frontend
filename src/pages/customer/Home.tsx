@@ -3,7 +3,6 @@ import { useSearchParams } from 'react-router-dom'
 import type { IRestaurant } from '../../types';
 import { useAuth } from '../../hooks/useAuth';
 import RestaurantCard from '../../components/restaurant/RestaurantCard';
-import Navbar from '../../components/common/Navbar';
 import Loader from '../../components/common/Loader';
 import { restaurantAPI } from '../../services/restaurantservices/restaurantApi';
 
@@ -65,7 +64,6 @@ const Home = () => {
 
   return (
     <>
-      <Navbar />
       <div className="mx-auto max-w-7xl px-4 py-6">
         {restaurants.length > 0 ? (
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">

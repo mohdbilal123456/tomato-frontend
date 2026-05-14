@@ -29,18 +29,19 @@ function ConfirmModal({
         <p className="mt-2 text-sm text-gray-600">{message}</p>
 
         <div className="mt-5 flex justify-end gap-3">
-          <button
-            onClick={onCancel}
-            className="rounded-lg px-4 py-2 text-gray-600 hover:bg-gray-100"
-          >
-            {cancelText}
-          </button>
+         
 
           <button
             onClick={onConfirm}
-            className="rounded-lg bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+            className="rounded-lg bg-red-500 px-4 py-2 cursor-pointer text-white hover:bg-red-600"
           >
             {confirmText}
+          </button>
+           <button
+            onClick={onCancel}
+            className="rounded-lg px-4 py-2 cursor-pointer  text-gray-600 hover:bg-gray-100"
+          >
+            {cancelText}
           </button>
         </div>
       </div>

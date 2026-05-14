@@ -8,6 +8,8 @@ import type { IMenuItem } from '../../types';
 import ConfirmModal from '../common/ConfirmModal';
 import { getApiErrorMessage } from '../../utils/apiError';
 import { menuAPI } from '../../services/restaurantservices/menuItemApi';
+import { useAuth } from '../../hooks/useAuth';
+import { cartAPI } from '../../services/restaurantservices/cartApi';
 
 interface MenuItemsProps {
   items: IMenuItem[];
@@ -31,6 +33,7 @@ function MenuItems({ items, onItemDeleted, isSeller }: MenuItemsProps) {
 
   // confirm delete
   const confirmDelete = async () => {
+    console.log("HELLO ")
     if (!selectedItemId) return;
 
     try {
@@ -65,6 +68,21 @@ function MenuItems({ items, onItemDeleted, isSeller }: MenuItemsProps) {
       setLoadingItemId(null);
     }
   };
+
+  const {fetchCart} = useAuth()
+
+  const addToCart = async(restaurantId:string,itemId:string)=>{
+    try {
+      const data =await cartAPI.addToCart(restaurantId,itemId)
+      toast.success(data?.message)
+      fetchCart()
+    } catch (error) {
+      console.log(error)
+    }
+    finally{
+      setLoadingItemId(null)
+    }
+  }
 
   return (
     <>
@@ -136,7 +154,8 @@ function MenuItems({ items, onItemDeleted, isSeller }: MenuItemsProps) {
                   {!isSeller && (
                     <button
                       disabled={!item.isAvailable || isLoading}
-                      className={`flex items-center justify-center rounded-lg p-2 ${!item.isAvailable || isLoading
+                      onClick={() => addToCart(item.restaurantId, item._id)}
+                      className={`flex items-center cursor-pointer justify-center rounded-lg p-2 ${!item.isAvailable || isLoading
                         ? "cursor-not-allowed text-gray-400"
                         : "text-red-500 hover:bg-red-50"
                         }`}
