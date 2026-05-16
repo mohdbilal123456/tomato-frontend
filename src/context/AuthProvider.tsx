@@ -5,7 +5,7 @@ import { type ICart, type LocationData, type Props, type User } from "../types";
 import { tryCatch } from "../utils/tryCatch";
 import { useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
-import { getApiErrorMessage, isUnauthorizedError } from "../utils/apiError";
+// import { getApiErrorMessage, isUnauthorizedError } from "../utils/apiError";
 import {
   AUTH_SESSION_EXPIRED_EVENT,
 } from "../utils/authEvents";
@@ -34,9 +34,9 @@ export const AuthProvider = ({ children }: Props) => {
 
     if (error) {
       console.error("Login Error:", error);
-      if (!isUnauthorizedError(error)) {
-        toast.error(getApiErrorMessage(error));
-      }
+      // if (!isUnauthorizedError(error)) {
+      //   toast.error(getApiErrorMessage(error));
+      // }
       setLoading(false);
       return;
     }
@@ -58,9 +58,9 @@ export const AuthProvider = ({ children }: Props) => {
 
     if (error) {
       console.log(error);
-      if (pageLocation.pathname !== "/login" && !isUnauthorizedError(error)) {
-        toast.error(getApiErrorMessage(error));
-      }
+      // if (pageLocation.pathname !== "/login" && !isUnauthorizedError(error)) {
+      //   toast.error(getApiErrorMessage(error));
+      // }
       setUser(null);
       setIsAuth(false);
       setLoading(false);
