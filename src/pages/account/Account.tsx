@@ -13,7 +13,7 @@ const Account = () => {
   const navigate = useNavigate();
 
   const logoutHandler = async() => {
-    const [data,error]= await tryCatch(()=>
+    await tryCatch(()=>
        authAPI.logOut()
     )
     setUser(null);
