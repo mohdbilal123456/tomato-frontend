@@ -10,10 +10,10 @@ import Home from './pages/customer/Home'
 import SelectRole from './pages/auth/SelectRole'
 import Account from './pages/account/Account'
 import Loader from './components/common/Loader'
-import Restaurant from './pages/restaurant-temp/Restaurant'
-import RestaurantDetails from './pages/restaurant-temp/RestaurantDetails'
+import Restaurant from './pages/restaurant/Restaurant'
+import RestaurantDetails from './pages/restaurant/RestaurantDetails'
 import Navbar from './components/common/Navbar'
-import Cart from './pages/restaurant-temp/Cart'
+import Cart from './pages/restaurant/Cart'
 
 function PrivateLayout() {
   return (
