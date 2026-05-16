@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { BiUpload } from 'react-icons/bi'
 import toast from 'react-hot-toast'
 

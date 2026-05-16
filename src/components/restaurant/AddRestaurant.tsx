@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import { BiMapPin, BiUpload } from 'react-icons/bi';
 import toast from 'react-hot-toast'
 import { useAuth } from '../../hooks/useAuth';

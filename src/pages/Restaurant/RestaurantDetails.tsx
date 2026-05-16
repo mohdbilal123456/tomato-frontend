@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import RestaurantProfile from '../../components/restaurant/RestaurantProfile'
 import MenuItems from '../../components/restaurant/MenuItems'
 import { useParams } from 'react-router-dom';

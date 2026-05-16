@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { BsCartPlus, BsEye } from 'react-icons/bs';
 import { VscLoading } from 'react-icons/vsc';
 import { FiEyeOff } from 'react-icons/fi';

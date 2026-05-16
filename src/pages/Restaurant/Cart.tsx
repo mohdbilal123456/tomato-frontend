@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { BiArrowBack, BiMinus, BiPlus } from 'react-icons/bi';
 import { TbTrash } from 'react-icons/tb';
 import { VscLoading } from 'react-icons/vsc';
@@ -12,7 +12,7 @@ import ConfirmModal from '../../components/common/ConfirmModal';
 
 function Cart() {
 
-  const { cart, subTotal, quauntity, fetchCart } = useAuth();
+  const { cart, subTotal, fetchCart } = useAuth();
   const navigate = useNavigate();
 
   const [loadingItemId, setLoadingItemId] = useState<string | null>(null);
@@ -152,7 +152,7 @@ function Cart() {
         <div className="rounded-xl bg-white p-4 shadow-sm space-y-3">
           <div className="flex justify-between text-sm">
             <span>Total Items</span>
-            <span>{quauntity}</span>
+            {/* <span>{quauntity}</span> */}
           </div>
 
           <div className="flex justify-between text-sm">

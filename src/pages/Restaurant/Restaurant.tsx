@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { IMenuItem, IRestaurant } from '../../types'
 import AddRestaurant from '../../components/restaurant/AddRestaurant'
 import Loader from '../../components/common/Loader'
