@@ -30,7 +30,6 @@ export const restaurantAPI = {
     return data
   },
   fetchSingleRestaurant:async(id:string)=>{
-    console.log("IIS",id)
     const {data} = await restaurantApi.get(`/api/restaurant/${id}`)
     return data
   }

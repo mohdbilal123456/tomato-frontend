@@ -78,6 +78,7 @@ function Cart() {
       <div className="mx-auto max-w-5xl px-4 py-6 space-y-6">
         <div className="flex items-center gap-3 mb-4">
           <button
+            type="button"
             onClick={() => navigate(-1)}
             className="rounded-full border cursor-pointer p-2 hover:bg-gray-100"
           >
